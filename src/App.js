@@ -1,32 +1,40 @@
 import './App.css';
-function Header(){
+function Header(props){
   return <header>
-         <h1><a href = "/">Hello World</a></h1>
+         <h1><a href = "/">{props.title}</a></h1>
        </header>
 }
 
-function Nav(){
+function Nav(props){
+  const lis = [];
+  for(let i = 0; i < props.topics.length; i++) {
+    let t = props.topics[i];
+    lis.push(<li><a href = {"/list/"+t.id}>{t.title}</a></li>);
+  } 
   return <nav>
          <ol>
-            <li><a href = "/list/1">html</a></li>
-            <li><a href = "/list/2">css</a></li>
-            <li><a href = "/list/3">javascript</a></li>
+            {lis}
          </ol>
        </nav>
 }
 
-function Article() {
+function Article(props) {
   return <article>
-          <h2>Welcome</h2>
-            This is..
+          <h2>{props.title}</h2>
+            {props.body}
          </article>
 }
 function App() {
+  const topics = [
+    {id : 1, title : "html", body : "html is.."},
+    {id : 2, title : "css", body : "css is.."},
+    {id : 3, title : "javascipt", body : "javascript is.."}
+  ];
   return (
     <div>
-      <Header></Header>
-      <Nav></Nav>
-      <Article></Article>
+      <Header title = "Hello React"></Header>
+      <Nav topics = {topics}></Nav>
+      <Article title = "Welcome" body = "Web"></Article>
     </div>
   );
 }
