@@ -12,10 +12,10 @@ const Nav = (props) => {
   const lis = [];
   for(let i = 0; i < props.topics.length; i++) {
     let t = props.topics[i];
-    lis.push(<li key = {t.id}><a id = {t.id} href = {"/list/"+t.id}
+    lis.push(<li key = {t.id}><a title = {t.title} href = {"/list/"+t.id}
       onClick = {(event) => {
         event.preventDefault();
-        props.onChangeMode(event.target.id);
+        props.onChangeMode(event.target.title);
       }}>{t.title}</a></li>);
   } 
   return <nav>
@@ -42,8 +42,8 @@ const App = () => {
       <Header title = "Hello React" onChangeMode = {()=>{
         alert('header');
         }}></Header>
-      <Nav topics = {topics} onChangeMode = {(id)=>{
-        alert(id);
+      <Nav topics = {topics} onChangeMode = {(title)=>{
+        alert(title);
       }}></Nav>
       <Article title = "Welcome" body = "Web"></Article>
     </div>
