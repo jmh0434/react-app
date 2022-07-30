@@ -1,24 +1,24 @@
 import "./App.css";
-import { useState } from "react";
+import { useState } from "react"; // state 사용
 
-function Header(props) {
+function Header(props) { // <header> 태그
   return (
     <header>
       <h1>
         <a
           href="/"
-          onClick={(event) => {
-            event.preventDefault();
-            props.onChangeMode();
+          onClick={(event) => { // click 이벤트가 발생했을 때
+            event.preventDefault(); // 새로고침 시 리로드 방지
+            props.onChangeMode(); // <header> 태그를 사용하는 곳으로 가서 모드를 바꿔준다
           }}
-        >
-          {props.title}
-        </a>
+        > 
+          {props.title}  
+        </a> 
       </h1>
     </header>
   );
 }
-function Nav(props) {
+function Nav(props) { // nav 태그
   const lis = [];
   for (let i = 0; i < props.topics.length; i++) {
     let t = props.topics[i];
@@ -118,6 +118,7 @@ function Update(props) {
     </article>
   );
 }
+
 function App() {
   const [mode, setMode] = useState("WELCOME");
   const [id, setId] = useState(null);
@@ -140,7 +141,7 @@ function App() {
       }
     }
     content = <Article title={title} body={body}></Article>;
-    contextControl = (
+    contextControl = <>
       <li>
         <a
           href={"/update/" + id}
@@ -152,7 +153,19 @@ function App() {
           Update
         </a>
       </li>
-    );
+      <li>
+        <input type = "button" value = "Delete" onClick={()=>{
+          const newTopics = [];
+          for (let i = 0; i < topics.length; i++) {
+            if (topics[i].id !== id) {
+              newTopics.push(topics[i]);
+            }
+          }
+          setTopics(newTopics);
+          setMode("WELCOME");
+        }}></input>
+      </li>
+    </>
   } else if (mode === "CREATE") {
     content = (
       <Create
@@ -195,6 +208,8 @@ function App() {
         }}
       ></Update>
     );
+  } else if (mode === "DELETE") {
+
   }
 
   return (
